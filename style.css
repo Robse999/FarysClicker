@@ -688,23 +688,25 @@ section .counters .cards .current-quest h3 {
 }
 
 @keyframes popupFade {
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
+}
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent dark overlay */
-    backdrop-filter: blur(2px);
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent dark overlay */
+  backdrop-filter: blur(2px);
+  padding: 0;
 }
+
 
 /* Modal Content Box */
 .modal-content {
@@ -717,6 +719,7 @@ section .counters .cards .current-quest h3 {
   max-width: 500px;
   position: relative;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
   transition: all 0.3s ease;
   transform: scale(0.95);
   opacity: 0;
@@ -829,6 +832,9 @@ footer .column > a:hover{
 }
 
 @media (width < 900px){
+  .body{
+    padding: 1rem;
+  }
   .nav-links{
     display: none;
   }
@@ -853,6 +859,50 @@ footer .column > a:hover{
   footer{
     display: grid;
     grid-template-columns: 1fr 200px;
+  }
+
+  .modal-content {
+    width: 80%;
+    margin: 5% auto;
+    padding: 1.5rem;
+  }
+
+  #shopModal .modal-content h3{
+    font-size: 1.5rem;
+  }
+
+  .shopCategories {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .shop-tab {
+    width: 40%;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  .shop-item {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .shop-item .item-name {
+    font-size: 1.5rem;
+  }
+
+  .item-price {
+    font-size: 1.5rem;
+  }
+
+  .buy-button {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .shop-items-container {
+    max-height: 250px;
   }
 }
 
