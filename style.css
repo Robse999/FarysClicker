@@ -860,7 +860,11 @@ footer .column > a:hover{
     display: grid;
     grid-template-columns: 1fr 200px;
   }
-
+    
+    .modal{
+    overflow-y: auto;
+  }
+        
   .modal-content {
     width: 80%;
     margin: 5% auto;
