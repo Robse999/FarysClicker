@@ -24,7 +24,7 @@ function countClicks() {
       showQuestPopup(quest.description);
       confetti();
       updateQuestDisplay();
-      addPoints(quest.goal);
+      addPoints(quest.price);
     }
   });
 
@@ -80,9 +80,18 @@ function updatePointsDisplay() {
         
 
 let quests = [
-{ goal: 20, completed: false, description: "Klicke den Knopf 20 mal" },
-{ goal: 50, completed: false, description: "Klicke den Knopf 50 mal" },
-{ goal: 100, completed: false, description: "Klicke den Knopf 100 mal" }
+{ goal: 20, price: 10, completed: false, description: "Klicke den Knopf 20 mal" },
+{ goal: 50, price: 25, completed: false, description: "Klicke den Knopf 50 mal" },
+{ goal: 100, price: 50, completed: false, description: "Klicke den Knopf 100 mal" },
+{ goal: 250, price: 100, completed: false, description: "Klicke den Knopf 250 mal" },
+{ goal: 500, price: 200, completed: false, description: "Klicke den Knopf 500 mal" },
+{ goal: 750, price: 300, completed: false, description: "Klicke den Knopf 750 mal" },
+{ goal: 1000, price: 500, completed: false, description: "Klicke den Knopf 1000 mal" },
+{ goal: 1500, price: 800, completed: false, description: "Klicke den Knopf 1500 mal" },
+{ goal: 2000, price: 1000, completed: false, description: "Klicke den Knopf 2000 mal" },
+{ goal: 3000, price: 1500, completed: false, description: "Klicke den Knopf 3000 mal" },
+{ goal: 4000, price: 2000, completed: false, description: "Klicke den Knopf 4000 mal" },
+{ goal: 5000, price: 3000, completed: false, description: "Klicke den Knopf 5000 mal" },
 ];
 
 function updateQuestDisplay() {
@@ -237,19 +246,40 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ],
     themes: [
-      { name: "Farben Wechsel", price: 40, bought: false, effect: function() {
+      { name: "Farben Wechsel", price: 200, bought: false, effect: function() {
         enableColorChange = true;
       }},
-      { name: "Dunkler Hintergrund", price: 100, bought: false, effect: function() {
+      { name: "Dunkler Hintergrund", price: 500, bought: false, effect: function() {
         document.body.style.backgroundColor = "#18181B";
         enableColorChange = false;
       }}
     ],
     buttons: [
-      { name: "Goldener Knopf", price: 20, bought: false, effect: () => { /* Swap image, etc. */ } }
+      { name: "Goldener Knopf", price: 400, levelRequired: 3, bought: false, effect: () => { 
+        const btn = document.getElementById("click-button");
+        applyTheme(btn, "gold-theme");
+      }},
+      { name: "Feuriger Knopf", price: 800, levelRequired: 5, bought: false, effect: () => { 
+        const btn = document.getElementById("click-button");
+        applyTheme(btn, "fire-theme");
+      }},
+      { name: "Standard Knopf", price: 1200, levelRequired: 10, bought: false, effect: () => { 
+        const btn = document.getElementById("click-button");
+        applyTheme(btn, "default-theme");
+      }},
     ]
   };
-            
+  
+  function applyTheme(button, newTheme) {
+    const themes = ["default-theme", "gold-theme", "fire-theme"]; // Add more themes here as needed
+  
+    // Remove all theme classes
+    themes.forEach(theme => button.classList.remove(theme));
+  
+    // Add the new one
+    button.classList.add(newTheme);
+  }
+
   function showCritEffect() {
     const critBox = document.getElementById("crit-message");
     critBox.textContent = "💥 Kritischer Klick! 💥";
@@ -480,22 +510,31 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 let achievements = [
-{ name: "50 Klicks", threshold: 50, unlocked: false, type: "clicks" },
-{ name: "100 Punkte", threshold: 100, unlocked: false, type: "points" },
-{ name: "100 Klicks", threshold: 100, unlocked: false, type: "clicks" },
-{ name: "Erster Kauf", threshold: 1, unlocked: false, type: "purchases" },
+{ name: "100 Klicks", threshold: 100, price: 20, unlocked: false, type: "clicks" },
+{ name: "500 Klicks", threshold: 500, price: 100, unlocked: false, type: "clicks" },
+{ name: "1000 Klicks", threshold: 1000, price: 500, unlocked: false, type: "clicks" },
+{ name: "2000 Klicks", threshold: 2000, price: 1000, unlocked: false, type: "clicks" },
+{ name: "100 Punkte", threshold: 100, price: 20, unlocked: false, type: "points" },
+{ name: "500 Punkte", threshold: 500, price: 100, unlocked: false, type: "points" },
+{ name: "1000 Punkte", threshold: 1000, price: 500, unlocked: false, type: "points" },
+{ name: "2000 Punkte", threshold: 2000, price: 1000, unlocked: false, type: "points" },
+{ name: "Erster Kauf", threshold: 1, price: 20, unlocked: false, type: "purchases" },
+{ name: "Treuer Kunde: 5 Käufe", threshold: 5, price: 100, unlocked: false, type: "purchases" },
 ];
 
 function checkAchievements() {
   achievements.forEach((achievement) => {
     if (!achievement.unlocked) {
-      if (
+      const reachedThreshold =
         (achievement.type === "clicks" && count >= achievement.threshold) ||
         (achievement.type === "points" && points >= achievement.threshold) ||
-        (achievement.type === "purchases" && totalPurchases >= achievement.threshold)
-      ) {
+        (achievement.type === "purchases" && totalPurchases >= achievement.threshold);
+
+      if (reachedThreshold) {
         achievement.unlocked = true;
-        showAchievementPopup("Errungenschaft abgeschlossen: " + achievement.name);
+        showAchievementPopup("Errungenschaft abgeschlossen: " + achievement.name); // Use same popup as quests
+        addPoints(achievement.price); // Reward the player
+        confetti(); // Same visual feedback as quests
       }
     }
   });
