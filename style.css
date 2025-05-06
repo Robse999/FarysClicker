@@ -354,6 +354,7 @@ section .counters .cards .current-quest h3 {
   
 
 .clickbtn {
+    touch-action: manipulation;
     --duration: 7s;
     --easing: linear;
     --c-color-1: rgba(255, 163, 26, 0.7);
