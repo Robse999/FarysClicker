@@ -164,11 +164,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Sample shop items by category
   const shopItems = {
     upgrades: [
-      { name: "Doppelte Punkte", price: 50, bought: false, levelRequired: 1, effect: () => { pointsPerClick *= 2; } },
-      { name: "Auto Klicker", price: 100, bought: false, levelRequired: 2, effect: function() {
+      { name: "Auto Klicker", price: 100, bought: false, levelRequired: 1, effect: function() {
         setInterval(countClicks, 2000);
       }},
-      { name: "Kritische Klicks", price: 250, bought: false, effect: function(){
+      { name: "Doppelte Punkte", price: 250, bought: false, levelRequired: 3, effect: () => { pointsPerClick *= 2; } },
+      { name: "Kritische Klicks", price: 500, bought: false, levelRequired: 5, effect: function(){
         window.countClicks = function() {
           const critChance = 0.01;
           const critMultiplier = 10;
@@ -199,9 +199,9 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       {
         name: "Lucky Spin",
-        price: 10,
+        price: 1000,
         bought: false, 
-        levelRequired: 1,
+        levelRequired: 7,
         effect: function () {
           // Hide the shop
           document.getElementById("shop").classList.add("hidden");
@@ -360,7 +360,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Hide wheel overlay after delay
         setTimeout(() => {
           document.getElementById("wheelOverlay").classList.add("hidden");
-        }, 2500);
+          document.getElementById("shop").classList.remove("hidden");
+        }, 2000);
       }
     }
   
@@ -387,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if(level < item.levelRequired){
         button.disabled = true;
-        button.innerHTML = `Level ${item.levelRequired} required`;
+        button.innerHTML = `Level ${item.levelRequired} benötigt`;
         button.style.backgroundColor = "gray";
       }else{  
         button.disabled = item.bought;
@@ -520,12 +521,13 @@ function handleClickForLevelSystem() {
 
   if (levelClicks >= clicksNeeded) {
     updateLevelBar(true); // Show full bar
+    clicksNeeded = Math.round(((clicksNeeded + 10) * 1.5) / 10) * 10;
 
     // Delay the reset logic so 100% renders first
     setTimeout(() => {
       level++;
       levelClicks = 0;
-      clicksNeeded = Math.round(((clicksNeeded + 10) * 1.5) / 10) * 10;
+      
       updateLevelBar();  // Re-render with reset state
     }, 200); // Delay just long enough to see 100%
   } else {
