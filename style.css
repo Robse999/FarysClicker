@@ -354,45 +354,46 @@ section .counters .cards .current-quest h3 {
   
 
 .clickbtn {
-    touch-action: manipulation;
-    --duration: 7s;
-    --easing: linear;
-    --c-color-1: rgba(255, 163, 26, 0.7);
-    --c-color-2: #1a23ff;
-    --c-color-3: #e21bda;
-    --c-color-4: rgba(255, 232, 26, 0.7);
-    --c-shadow: rgba(235, 179, 25, 0.8);
-    box-shadow: 0 0 16px 8px var(--c-shadow);
-    --c-shadow-inset-top: #D97B2B;
-    --c-shadow-inset-bottom: rgba(255, 250, 215, 0.8);
-    --c-radial-inner: #e0b815;
-    --c-radial-outer: #F2C94C;
-    --c-color: #fff;
-    -webkit-tap-highlight-color: transparent;
-    appearance: none; /* Standard für alle modernen Browser */
-    -webkit-appearance: none;
-    outline: none;
-    position: relative;
-    cursor: pointer;
-    border: none;
-    user-select: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 24px;
-    padding: 0;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    align-items: center;
-    letter-spacing: 0.02em;
-    line-height: 1.5;
-    color: var(--c-color);
-    background: radial-gradient(
-      circle,
-      var(--c-radial-inner),
-      var(--c-radial-outer) 80%
-    );
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--c-color);
+  background: radial-gradient(
+    circle,
+    var(--c-radial-inner),
+    var(--c-radial-outer) 80%
+  );
+  box-shadow: 0 0 16px 8px var(--c-shadow);
+}
 
+.clickbtn.default-theme {
+  --duration: 7s;
+  --easing: linear;
+  --c-color-1: rgba(255, 163, 26, 0.7);
+  --c-color-2: #1a23ff;
+  --c-color-3: #e21bda;
+  --c-color-4: rgba(255, 232, 26, 0.7);
+  --c-shadow: rgba(235, 179, 25, 0.8);
+  --c-shadow-inset-top: #D97B2B;
+  --c-shadow-inset-bottom: rgba(255, 250, 215, 0.8);
+  --c-radial-inner: #e0b815;
+  --c-radial-outer: #F2C94C;
+  --c-color: #fff;
 }
   
 .clickbtn:before {
@@ -694,9 +695,36 @@ section .counters .cards .current-quest h3 {
   }
 }
 
+.clickbtn.gold-theme {
+  --c-color-1: rgba(255, 215, 0, 0.7);         /* Kreisfarben */
+  --c-color-2: #ffd700;
+  --c-color-3: #ffa500;
+  --c-color-4: rgba(255, 240, 120, 0.7);
+  --c-shadow: rgba(255, 215, 0, 0.8);          /* äußerer Glow */
+  --c-shadow-inset-top: #b8860b;
+  --c-shadow-inset-bottom: rgba(255, 250, 200, 0.8);
+  --c-radial-inner: #fff8dc;
+  --c-radial-outer: #ffeb3b;
+  --c-color: #000;                             /* Textfarbe */
+}
+
+.clickbtn.fire-theme {
+  --c-color-1: rgba(255, 80, 0, 0.7);
+  --c-color-2: #ff0000;
+  --c-color-3: #cc0000;
+  --c-color-4: rgba(255, 150, 0, 0.7);
+  --c-shadow: rgba(255, 60, 0, 0.8);
+  --c-shadow-inset-top: #8b0000;
+  --c-shadow-inset-bottom: rgba(255, 180, 150, 0.8);
+  --c-radial-inner: #ff4500;
+  --c-radial-outer: #ff6347;
+  --c-color: #fff;
+}
+
 .modal {
   display: none;
   position: fixed;
+  overflow-y: auto;
   z-index: 1000;
   left: 0;
   top: 0;
@@ -739,7 +767,7 @@ section .counters .cards .current-quest h3 {
 #shopModal .modal-content h3{
   text-decoration: underline;
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  margin-left: 10px;
 }
 /* Hover Outline Effect */
 .modal-content:hover {
@@ -860,11 +888,7 @@ footer .column > a:hover{
     display: grid;
     grid-template-columns: 1fr 200px;
   }
-    
-    .modal{
-    overflow-y: auto;
-  }
-        
+
   .modal-content {
     width: 80%;
     margin: 5% auto;
@@ -907,6 +931,24 @@ footer .column > a:hover{
 
   .shop-items-container {
     max-height: 250px;
+  }
+
+  .buy-button {
+    font-size: 1.1rem;
+    padding: 0.4rem 0.8rem;
+    height: auto;
+    width: 100%;
+    margin: 0.5rem 0;
+    justify-content: center;
+    border-radius: 6px;
+  }
+
+  .buy-button:hover {
+    transform: scale(1.03);
+  }
+
+  .buy-button:active {
+    transform: scale(0.98);
   }
 }
 
@@ -1056,7 +1098,7 @@ footer .column > a:hover{
   border-radius: 10px;
   background-color: #1a1a1a;
   padding: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 0.3rem;
 }
 
 /* Optional: Custom Scrollbar Styling for dark theme */
@@ -1079,6 +1121,7 @@ footer .column > a:hover{
 .buy-button {
   padding: 0.6rem 1.2rem;
   height: 40px;
+  margin-top: 0.5rem;
   margin-left: auto;
   margin-right: 10px;
   display: flex;
@@ -1300,6 +1343,7 @@ footer .column > a:hover{
     right: -5%;
   }
 }
+
 
 
 
