@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>My First Click Counter</title>
+    <link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
+
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">
+            <a href="#">
+                <img src="https://bauzentrum-farys.de/wp-content/uploads/2016/05/Farys-Logo.svg">
+            </a>
+        </div>
+
+        <ul class="nav-links">
+            <li class="link"><a href="#">Start</a></li>
+            <li id="link1" class="link"><a href="#">Counter</a></li>
+            <li id="link2" class="link"><a href="#">Achievements</a></li>
+            <li id="link3" class="link"><a href="#">About</a></li>
+            
+            <div id="loginBtn" style="display: none;">
+                <a href="auth.html" class="btn">Login/Register</a>
+            </div>
+            <div id="userInfo" style="display: none;">
+                <span id="username"></span>
+                <button onclick="logout()" class="btn">Logout</button>
+            </div>
+        </ul>
+        <div class="nav-shop">
+
+            <button id ="toogle-shop" class="shopbtn">🛒 Shop öffnen</button>
+        
+        </div>
+
+        
+
+        <div id="shop">
+            <div id="shopModal" class="modal">
+
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h1><u>Shop</u></h1>
+
+                       <!-- Category Tabs -->
+                    <div id="shop-categories" class ="shopCategories">
+                      <button class="shop-tab" onclick="switchCategory('upgrades')">Upgrades</button>
+                      <button class="shop-tab" onclick="switchCategory('themes')">Themen</button>
+                      <button class="shop-tab" onclick="switchCategory('buttons')">Knöpfe</button>
+                      <button class="shop-tab" onclick="switchCategory('sounds')">Sounds</button>
+                    </div>    
+
+                    <h3>Hier Kaufen:</h3>  
+
+                    <div class="shop-items-container">
+                        <div id="shop-items">                   
+                        <!-- Shop items will appear here dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <template id="shop-item-template">
+                <div class="shop-item">
+                  <h2 class="item-name"></h2>
+                  <p class="item-price"></p>
+                  <div class="button-container">
+                    <button class="buy-button"></button>
+                    <button class="return-button" style="display: none;">Zurückgeben</button>
+                  </div>
+                </div>
+            </template>
+        </div>
+        <div id="shop-message" class="shop-message"></div>
+        <div id="crit-message" class="crit-message"></div>
+
+    </nav>
+
+    <header class="container">
+        <div class="content">
+                <span class="blur"></span>
+                <span class="blur"></span>
+                <h3>Farys Clicker</h3>
+                <h1>Hi, ich heiße <span>Sean</span> und das ist meine erste eigene Webseite 🎉</h1>
+                <p>
+                    Ich habe eine Website entworfen bei der es darum geht, so oft wie du kannst den Button unter mir zu klicken. 
+                    Klingt nicht so schwer oder? Naja viel Spaß <i class="ri-emotion-happy-line"></i>
+                </p>
+        </div>
+        <div class="image">
+            <img src="images/Pferde_Umriss.png">
+        </div>
+    </header>
+
+    <section class="container">
+        <h2 class="header">
+            
+            <button class="clickbtn default-theme" id="click-button" onclick="countClicks()">
+                <div class="wrapper">
+                  <span>Click Me</span>
+                  <div class="circle circle-12"></div>
+                  <div class="circle circle-11"></div>
+                  <div class="circle circle-10"></div>
+                  <div class="circle circle-9"></div>
+                  <div class="circle circle-8"></div>
+                  <div class="circle circle-7"></div>
+                  <div class="circle circle-6"></div>
+                  <div class="circle circle-5"></div>
+                  <div class="circle circle-4"></div>
+                  <div class="circle circle-3"></div>
+                  <div class="circle circle-2"></div>
+                  <div class="circle circle-1"></div>
+                </div>
+            </button>   
+              
+            <div id="level-container">
+              <div id="level-bar"></div>
+            </div>
+            <p id="clicks-to-next" class="click-info">Noch 20 Klicks bis zum nächsten Level</p>
+            <p id="level-info">Level 1</p>
+        </h2>
+
+            <div class="counters">
+                <div class="cards">
+                        <h2>Aufgabe:</h2>
+                        <div class="current-quest">
+                            <h3 id="current-quest"></h3>      
+                        </div>   
+                        <div id="quest-popup" style="display: none;">
+                            <h2 class="quest-header">Aufgabe abgeschlossen 🎉 </h2>
+                            <p id="popup-text"></p>
+                        </div>
+                </div>
+                <div class="cards">
+                    <h2>Klick Zähler: </h2>
+                    <div class="count-number">
+                        <h3 id="click-count">0</h3>
+                        
+                    </div>
+                </div>
+                <div class="cards">
+                    <h2>Punkte:</h2> 
+                    <div class="point-number">
+                        <h3 id="points-display"></h3>                           
+                    </div>   
+                </div>
+
+            </div>
+    </section>
+
+    <section class="container">
+        <div class="button-row">
+          <button class="btn" id="settings-btn">Einstellungen</button>
+          <button class="btn" onclick="resetGame()">Neustart</button>
+          <button class="btn">Speichern</button>
+          <button class="btn" id="help-btn">Hilfe</button>
+        </div>
+      
+        <div id="helpModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1><u>Tutorial</u></h1>
+            <h3>Drücke so oft wie du willst auf den Knopf</h3>
+          </div>
+        </div>
+
+        <div id="settingsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1><u>Einstellungen</u></h1>
+                
+                <div class="settings-container">
+                    <!-- Sound Settings -->
+                    <div class="settings-section">
+                        <h3>Sound Einstellungen</h3>
+                        <div class="setting-item">
+                            <label for="master-volume">Master Lautstärke</label>
+                            <input type="range" id="master-volume" min="0" max="100" value="100">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="setting-item">
+                            <label for="effects-volume">Effekt Lautstärke</label>
+                            <input type="range" id="effects-volume" min="0" max="100" value="100">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="setting-item">
+                            <label for="music-volume">Musik Lautstärke</label>
+                            <input type="range" id="music-volume" min="0" max="100" value="100">
+                            <span class="volume-value">100%</span>
+                        </div>
+                    </div>
+
+                    <!-- Display Settings -->
+                    <div class="settings-section">
+                        <h3>Anzeige Einstellungen</h3>
+                        <div class="setting-item">
+                            <label for="quality">Grafik Qualität</label>
+                            <select id="quality">
+                                <option value="low">Niedrig</option>
+                                <option value="medium" selected>Mittel</option>
+                                <option value="high">Hoch</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="particles">Partikel Effekte</label>
+                            <select id="particles">
+                                <option value="off">Aus</option>
+                                <option value="low">Wenig</option>
+                                <option value="medium" selected>Mittel</option>
+                                <option value="high">Viel</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Game Settings -->
+                    <div class="settings-section">
+                        <h3>Spiel Einstellungen</h3>
+                        <div class="setting-item">
+                            <label for="notifications">Benachrichtigungen</label>
+                            <select id="notifications">
+                                <option value="all" selected>Alle</option>
+                                <option value="important">Nur Wichtig</option>
+                                <option value="none">Keine</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="auto-save">Auto-Speichern</label>
+                            <select id="auto-save">
+                                <option value="off">Aus</option>
+                                <option value="1min">Jede Minute</option>
+                                <option value="5min" selected>Alle 5 Minuten</option>
+                                <option value="10min">Alle 10 Minuten</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Save Settings Button -->
+                    <div class="settings-actions">
+                        <button id="save-settings" class="btn">Einstellungen Speichern</button>
+                        <button id="reset-settings" class="btn">Zurücksetzen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="container">
+        <h2 class="header"><u>Ziele</u></h2>
+        <div class="features">
+                <div class="cards">
+                    <h4><u>Abgeschlossene Ziele</u></h4>
+                    <span>
+                        <i class="ri-medal-line"></i>
+                    </span>
+                    <p> 
+                        View all your earned Achievments here
+                    </p>
+                    <a href="#">See here <i class="ri-arrow-right-circle-fill"></i> </a>
+                </div>
+                <div class="cards">
+                    <h4><u>Weitere Ziele</u></h4>
+                    <span>
+                        <i class="ri-lock-line"></i>
+                    </span>
+                    <p> 
+                        Some locked Achievemnts are waiting for you
+                    </p>
+                    <a href="#">Click here <i class="ri-arrow-right-circle-fill"></i> </a>
+                </div>
+                <div class="cards">
+                    <h4><u>Trophäen</u></h4>
+                    <span>
+                        <i class="ri-trophy-line"></i>
+                    </span>
+                    <p> 
+                        View all your earned Trophies here
+                    </p>
+                    <a href="#">Go here <i class="ri-arrow-right-circle-fill"></i> </a>
+                </div>
+         </div>
+    </section>
+
+    <footer class="container">
+        <span class="blur"></span>
+        <span class="blur"></span>
+        <div class="column">
+            <div class="logo">
+                <img src="https://bauzentrum-farys.de/wp-content/uploads/2016/05/Farys-Logo.svg">
+            </div>
+            <p>
+            Vielen Dank fürs Spielen.
+            </p>
+            <div class="socials">
+                <a href="#"><i class="ri-youtube-line"></i></a>
+                <a href="#"><i class="ri-instagram-line"></i></a>
+                <a href="#"><i class="ri-snapchat-line"></i></a>
+            </div>
+        </div>
+
+        <div class="column">
+            <h4><u>Company</u></h4>
+            <a href="#">Business</a>
+            <a href="#">Partnership</a>
+            <a href="#">Network</a>
+        </div>
+        <div class="column">
+            <h4><u>About us</u></h4>
+            <a href="#">Blogs</a>
+            <a href="#">Channels</a>
+            <a href="#">Sponsors</a>
+        </div>
+        <div class="column">
+            <h4><u>Contact</u></h4>
+            <a href="#">Contacs Us</a>
+            <a href="#">Privicy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    <div class="copyright">
+        Copyright © 2025 Bauzentrum Farys. All Rights reserved.
+    </div>
+
+    <div id="achievement-popup">Achievement Unlocked!</div>
+    
+    <div id="wheelOverlay" class="hidden">
+        <div class="wrapperWheel">
+          <div class="containerWheel">
+            <canvas id="wheel"></canvas>
+            <button id="spin-btn">Drehen</button>
+            <i class="ri-arrow-left-fill" id="wheel-arrow"></i>
+          </div>
+          <div id="final-value">
+            <p>Klick auf Drehen</p>
+          </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <!-- Chart JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- Chart JS Plugin for displaying text over chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"></script>
+    
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <!-- Sound Effects -->
+    <audio id="click-sound" src="https://actions.google.com/sounds/v1/emergency/emergency_siren_short_burst.ogg" preload="auto"></audio>
+    <audio id="pop-sound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg" preload="auto"></audio>
+    <audio id="ding-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+    <audio id="woosh-sound" src="https://actions.google.com/sounds/v1/ambiences/swoosh.ogg" preload="auto"></audio>
+    <audio id="tada-sound" src="https://actions.google.com/sounds/v1/alarms/beep_high.ogg" preload="auto"></audio>
+    <audio id="celebration-sound" src="https://actions.google.com/sounds/v1/alarms/bugle_tune.ogg" preload="auto"></audio>
+
+</body>
+</html>
